@@ -1,2 +1,3 @@
-# School-MGMT
-NodeJS Backend For School
+# School Management System
+
+NodeJS (Typescript) + MongoDB
