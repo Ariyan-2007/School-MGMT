@@ -1,23 +1,20 @@
-import { User } from "../models/user";
+import User, { IUser } from "../models/Users/user";
 
 export class UserRepository {
-  private users: User[] = [];
-
-  async findById(id: string): Promise<User> {
-    const user = this.users.find((user) => user.id === id);
-    if (!user) {
-      throw new Error(`User with id ${id} not found`);
-    }
-    return user;
+  public async createUser(
+    name: string,
+    email: string,
+    role: string
+  ): Promise<IUser> {
+    const newUser = new User({ name, email, role });
+    return await newUser.save();
   }
 
-  async create(user: User): Promise<User> {
-    const userData = this.users.find((userData) => userData.id === user.id);
-    if (!userData) {
-      this.users.push(user);
-      return user;
-    } else {
-      throw new Error(`User with id ${user.id} already exists`);
-    }
+  public async getUserById(id: string): Promise<IUser | null> {
+    return await User.findById(id).exec();
+  }
+
+  public async getAllUsers(): Promise<IUser[]> {
+    return await User.find().exec();
   }
 }
